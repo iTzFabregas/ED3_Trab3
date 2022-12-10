@@ -5,14 +5,16 @@ using namespace std;
 void Graph::insert_edge(Vertex vertex1, no_lista vertex2) { //paramentro idConecta
 
     it = this->graph.find(vertex1.idConecta);
+    vertex1.lista_adj.push_front(vertex2);
     if (it == this->graph.end()) {
         // TO-DO adicionar um vertice no map
-        graph[vertex1.idConecta] = vertex1;
+        //graph[vertex1.idConecta] = vertex1;
+        graph.insert(make_pair(vertex1.idConecta, vertex1));
         // TO-DO colocar o vertice na lista de adjacencia
-        vertex1.lista_adj.push_front(vertex2); // PROBLEMA SE ATUALZIA O VERTICE DEPOS
+        //vertex1.lista_adj.push_front(vertex2); // PROBLEMA SE ATUALZIA O VERTICE DEPOS
     } else { 
         // TO-DO colocar o vertice na lista de adjacencia
-        vertex1.lista_adj.push_front(vertex2);
+        //vertex1.lista_adj.push_front(vertex2);
     }
 }
 /*
