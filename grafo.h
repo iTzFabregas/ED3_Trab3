@@ -1,3 +1,4 @@
+#include "register.h"
 
 typedef struct No{
     int idPoPsConectado;
@@ -19,6 +20,6 @@ typedef struct{
 
 Lista* criar_lista();
 void liberar_lista(Lista* lista);
-void inserir_ordenado(Lista* lista, int );
+void inserir_ordenado(Lista* lista, Data_reg* reg);
 
 Grafo* criar_grafo();

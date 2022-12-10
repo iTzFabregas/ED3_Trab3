@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 #include "register.h"
 #include "grafo.h"
@@ -30,9 +31,18 @@ void command11(char* file_name){
         read_register(file, reg);
 
         for(int j = 0; j < header->proxRRN; j++){
-            if(grafo[j]->idConecta == -1){
-                
+            if(grafo[j]->idConecta == -1){ //posicao vazia
+                grafo[j]->idConecta = reg->idConecta;
+                strcpy(grafo[j]->nomePoPs, reg->nomePoPs);
+                strcpy(grafo[j]->nomePais, reg->nomePais);
+                strcpy(grafo[j]->siglaPais, reg->siglaPais);
+                break;
+            } else if(grafo[j]->idConecta == reg->idConecta){ //inserir na lista adj
+                inserir_ordenado(grafo[j]->lista_adj, reg);
+                break;
             }
         }
-    } 
+    }
+
+    printf("-> %d", grafo[0]->idConecta);
 }
