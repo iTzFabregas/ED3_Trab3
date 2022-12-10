@@ -5,6 +5,20 @@
 #include "register.h"
 #include "grafo.h"
 
+void bubble_sort(Grafo* vetor[], int tamanho){
+    Grafo* aux;
+
+	for(int j=tamanho-1; j>=1; j--){
+		for(int i=0; i<j; i++){
+			if(vetor[i]->idConecta >vetor[i+1]->idConecta){
+				aux=vetor[i];
+                vetor[i]=vetor[i+1];
+                vetor[i+1]=aux;
+            }
+        }
+    }
+}
+
 void command11(char* file_name){
     FILE* file = fopen(file_name, "rb");
     if(file == NULL){
@@ -44,5 +58,13 @@ void command11(char* file_name){
         }
     }
 
-    printf("-> %d", grafo[0]->idConecta);
+    bubble_sort(grafo, header->proxRRN);
+
+    for(int j = 0; j < header->proxRRN; j++){
+        if(grafo[j]->idConecta == -1){
+            continue;
+        } else {
+            printf("%d %s\n", grafo[j]->idConecta, grafo[j]->nomePais);
+        }
+    }
 }
