@@ -1,5 +1,4 @@
 #include <iostream>
-#include "classes.cpp"
 #include "comando11.hpp"
 
 using namespace std;
@@ -9,7 +8,7 @@ using namespace std;
 int main(void) {
     //variaveis p/ entrada do teclado
     int command;
-    string file_name;
+    char file_name[30];
 
     //le do teclado qual o comando sera acionado
     cin >> command;

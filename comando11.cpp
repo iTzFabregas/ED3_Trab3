@@ -1,5 +1,8 @@
+#include "comando11.hpp"
 #include "register.hpp"
 #include "classes.hpp"
+
+using namespace std;
 
 void command11(char* file_name){
     FILE* file = fopen(file_name, "rb");
@@ -23,6 +26,7 @@ void command11(char* file_name){
     no_lista no;
 
     for(int i = 0; i < header->proxRRN; i++){ //percorrer arquivo de dados
+        fseek(file, (LEN_REG*i) + LEN_DISC_PAG, SEEK_SET);
         read_register(file, reg);
 
         vertice.idConecta = reg->idConecta;
@@ -34,10 +38,19 @@ void command11(char* file_name){
         no.velocidade = reg->velocidade;
 
         graph.insert_edge(vertice, no);
+        
     }
 
+    list<no_lista>::iterator jt;
     map<int, Vertex>::iterator it;
+    
     for(it=graph.graph.begin(); it!=graph.graph.end(); ++it){
-        cout << it->first << " => " << it->second.nomePoPs << '\n';
+        for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); ++jt){
+            cout << it->first << " " << it->second.nomePoPs << " "
+            << it->second.nomePais << " "<< it->second.siglaPais << " "
+            <<jt->idPoPsConectado <<" "<< jt->velocidade*1024 << "Mbps" << '\n';
+        }
+        
     }
+
 }

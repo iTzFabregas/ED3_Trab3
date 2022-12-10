@@ -3,28 +3,26 @@
 
 #include <list>
 #include <iostream>
-#include <list>
 #include <map>
 
 using namespace std;
 
-struct no_lista{
+typedef struct {
     int idPoPsConectado;
     int velocidade;
-};
+} no_lista;
 
-struct Vertex{
+typedef struct {
     int idConecta; // TIRAR ESSE INT
     string nomePoPs;
     string nomePais;
     string siglaPais;
 
     list<no_lista> lista_adj;
-}; 
+} Vertex; 
 
 class Graph {
 private:
-    map<int, Vertex>::iterator it;
 
 public:
 
