@@ -37,9 +37,7 @@ void command11(char* file_name){
         no.idPoPsConectado = reg->idPoPsConectado;
         no.velocidade = reg->velocidade;
 
-        if (no.idPoPsConectado != -1 && no.velocidade != -1) {
-            graph.insert_edge(vertice, no);
-        }
+        graph.insert_edge(vertice, no);
         
     }
 
@@ -50,7 +48,7 @@ void command11(char* file_name){
         for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); ++jt){
             cout << it->first << " " << it->second.nomePoPs << " "
             << it->second.nomePais << " "<< it->second.siglaPais << " "
-            <<jt->idPoPsConectado <<" "<< jt->velocidade << '\n';
+            <<jt->idPoPsConectado <<" "<< jt->velocidade*1024 << "Mbps" << '\n';
         }
         
     }
