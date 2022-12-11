@@ -11,4 +11,6 @@ Graph command11(char* file_name);
 
 void command13(char* file_name);
 
+void command14(char* file_name);
+
 #endif  

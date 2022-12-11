@@ -61,12 +61,40 @@ void command13(char* file_name) {
         cin >> destination;
         int flux = graph.dijkstra(origin, destination);
         if (flux == -1) {
-            cout << "O fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << endl;
+            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << endl;
         } else {
-            cout << "O fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << "Mbps\n";
+            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << "Mbps\n";
         }
         
         
     }
+}
 
+void command14(char* file_name) {
+    Graph graph = command11(file_name);
+    int n;
+    cin >> n;
+
+    int origin;
+    int stop;
+    int destination;
+
+    for (size_t i = 0; i < n; i++) {
+        cin >> origin;
+        cin >> destination;
+        cin >> stop;
+
+        int flux1 = graph.dijkstra(origin, stop);
+        int flux2 = graph.dijkstra(stop, destination);
+
+        if (flux1 == -1 || flux2 == -1) {
+            cout << "Comprimento do caminho entre " << origin << " e " 
+            << destination << " parando em " << stop << ": -1" << endl;
+        } else {
+            cout << "Comprimento do caminho entre " << origin << " e " 
+            << destination << " parando em " << stop << ": " << flux1+flux2
+            << "Mbps" << endl;
+        }
+    }
+    
 }

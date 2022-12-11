@@ -29,7 +29,8 @@ int main(void) {
             break;
             
         case 14:
-            
+            cin >> file_name;
+            command14(file_name);
             break;
     }
 }
