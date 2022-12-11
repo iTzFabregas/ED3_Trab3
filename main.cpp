@@ -17,7 +17,8 @@ int main(void) {
     switch (command){
         case 11:
             cin >> file_name;
-            command11(file_name);
+            command11(file_name).print_graph();
+
             break;
 
         case 12:

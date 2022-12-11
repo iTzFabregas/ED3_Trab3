@@ -4,6 +4,9 @@
 #include <list>
 #include <iostream>
 #include <map>
+#include <queue>
+
+#define INFINITE INT32_MAX-1
 
 using namespace std;
 
@@ -23,13 +26,13 @@ typedef struct {
 
 class Graph {
 private:
+    int num_vert;
 
 public:
-
     map<int, Vertex> graph;
 
     Graph() {
-        // O MAP JA ESTA VAZIO
+        this->num_vert = 0;
     }
 
     void insert_edge(Vertex, no_lista); //paramentro idConecta
@@ -37,10 +40,14 @@ public:
     /*bool exist_edge() {
         return true;
     }
+    */
 
-    void print_graph() {
-    }
 
+    void print_graph();
+
+    int dijkstra(int orig, int dest);
+    
+    /*
     ~Graph() {
         
     }*/
