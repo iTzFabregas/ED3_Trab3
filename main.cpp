@@ -19,12 +19,16 @@ int main(void) {
             cin >> file_name;
             command11(file_name);
             break;
+
         case 12:
             
             break;
+
         case 13:
-            
+            cin >> file_name;
+            command13(file_name);
             break;
+            
         case 14:
             
             break;

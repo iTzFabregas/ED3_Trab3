@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void command11(char* file_name){
+Graph command11(char* file_name){
     FILE* file = fopen(file_name, "rb");
     if(file == NULL){
         //TO DO
@@ -12,7 +12,7 @@ void command11(char* file_name){
 
     Header_reg* header = create_header();
     if(header == NULL){
-        //TO DO
+        //TO DO>
     }
     read_header(header, file);
 
@@ -35,22 +35,40 @@ void command11(char* file_name){
         vertice.siglaPais = reg->siglaPais;
 
         no.idPoPsConectado = reg->idPoPsConectado;
-        no.velocidade = reg->velocidade;
+        no.velocidade = reg->velocidade * 1024;
 
         graph.insert_edge(vertice, no);
         
     }
 
-    list<no_lista>::iterator jt;
     map<int, Vertex>::iterator it;
+    list<no_lista>::iterator jt;
     
     for(it=graph.graph.begin(); it!=graph.graph.end(); ++it){
         for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); ++jt){
             cout << it->first << " " << it->second.nomePoPs << " "
             << it->second.nomePais << " "<< it->second.siglaPais << " "
-            <<jt->idPoPsConectado <<" "<< jt->velocidade*1024 << "Mbps" << '\n';
-        }
+            <<jt->idPoPsConectado <<" "<< jt->velocidade << "Mbps" << '\n';
+        }        
+    }
+
+    return graph;
+}
+
+void command13(char* file_name) {
+    Graph graph = command11(file_name);
+    cout << "sair\n";
+    int n;
+    cin >> n;
+
+    int origin;
+    int destination;
+
+    int speed;
+    for (size_t i = 0; i < n; i++) {
+
         
+
     }
 
 }

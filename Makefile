@@ -3,7 +3,10 @@ all:
 	g++ -o trab3 *.o 
 
 clean:
-	rm *.o
+	rm *.o *.bin
+
+copy:
+	cp ../antes/* ./
 
 run:
 	./trab3
