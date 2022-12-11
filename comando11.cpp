@@ -1,29 +1,28 @@
 #include "comando11.hpp"
-#include "register.hpp"
-#include "classes.hpp"
 
 using namespace std;
 
 Graph command11(char* file_name){
+
+    Graph graph; 
+
     FILE* file = fopen(file_name, "rb");
     if(file == NULL){
-        //TO DO
+        cout << "Falha na execução da funcionalidade." << endl;
+        return graph;
     }
 
     Header_reg* header = create_header();
-    if(header == NULL){
-        //TO DO>
-    }
     read_header(header, file);
+    if (header->status == '0') {
+        cout << "Falha na execução da funcionalidade." << endl;
+        return graph;
+    }
 
     Data_reg* reg = create_reg();
-    if(reg == NULL){
-        //TO DO
-    }
 
-    Graph graph; 
     Vertex vertice;
-    no_lista no;
+    Edge edge;
 
     for(int i = 0; i < header->proxRRN; i++){ //percorrer arquivo de dados
         fseek(file, (LEN_REG*i) + LEN_DISC_PAG, SEEK_SET);
@@ -34,15 +33,15 @@ Graph command11(char* file_name){
         vertice.nomePais = reg->nomePais;
         vertice.siglaPais = reg->siglaPais;
 
-        no.idPoPsConectado = reg->idPoPsConectado;
+        edge.idPoPsConectado = reg->idPoPsConectado;
         if (reg->unidadeMedida == 'G') {
-            no.velocidade = reg->velocidade * 1024;
+            edge.velocidade = reg->velocidade * 1024;
 
         } else {
-            no.velocidade = reg->velocidade;
+            edge.velocidade = reg->velocidade;
         }
 
-        graph.insert_edge(vertice, no);
+        graph.insert_edge(vertice, edge);
         
     }
 

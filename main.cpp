@@ -3,8 +3,6 @@
 
 using namespace std;
 
-//#include "funcoesFornecidas.h"
-
 int main(void) {
     //variaveis p/ entrada do teclado
     int command;
