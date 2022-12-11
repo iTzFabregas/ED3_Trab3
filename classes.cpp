@@ -9,7 +9,7 @@ void Graph::insert_edge(Vertex vertex1, no_lista aresta1) { //paramentro idConec
     if (it != this->graph.end()) {
         vertex1.lista_adj = it->second.lista_adj;
     }
-    if (aresta1.velocidade != -1) {
+    if (aresta1.velocidade != -1024) {
         vertex1.lista_adj.push_front(aresta1);
     }
 
@@ -20,7 +20,7 @@ void Graph::insert_edge(Vertex vertex1, no_lista aresta1) { //paramentro idConec
         it->second = vertex1;
     }
 
-    if (aresta1.velocidade != -1) {
+    if (aresta1.velocidade != -1024) {
         it = this->graph.find(aresta1.idPoPsConectado);
         Vertex vertex2;
         if (it != this->graph.end()) {
