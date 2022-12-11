@@ -61,9 +61,9 @@ void command13(char* file_name) {
         cin >> destination;
         int flux = graph.dijkstra(origin, destination);
         if (flux == -1) {
-            cout << "O fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << endl;
+            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << endl;
         } else {
-            cout << "O fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << "Mbps\n";
+            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << "Mbps\n";
         }
         
         
