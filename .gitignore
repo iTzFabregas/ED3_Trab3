@@ -32,5 +32,6 @@
 *.app
 *.out
 trab3
-./.vscode/*
+.vscode
 *.bin
+*.zip

@@ -1,29 +1,28 @@
 #include "comando11.hpp"
-#include "register.hpp"
-#include "classes.hpp"
 
 using namespace std;
 
 Graph command11(char* file_name){
+
+    Graph graph; 
+
     FILE* file = fopen(file_name, "rb");
     if(file == NULL){
-        //TO DO
+        cout << "Falha na execução da funcionalidade." << endl;
+        return graph;
     }
 
     Header_reg* header = create_header();
-    if(header == NULL){
-        //TO DO>
-    }
     read_header(header, file);
+    if (header->status == '0') {
+        cout << "Falha na execução da funcionalidade." << endl;
+        return graph;
+    }
 
     Data_reg* reg = create_reg();
-    if(reg == NULL){
-        //TO DO
-    }
 
-    Graph graph; 
     Vertex vertice;
-    no_lista no;
+    Edge edge;
 
     for(int i = 0; i < header->proxRRN; i++){ //percorrer arquivo de dados
         fseek(file, (LEN_REG*i) + LEN_DISC_PAG, SEEK_SET);
@@ -34,22 +33,16 @@ Graph command11(char* file_name){
         vertice.nomePais = reg->nomePais;
         vertice.siglaPais = reg->siglaPais;
 
-        no.idPoPsConectado = reg->idPoPsConectado;
-        no.velocidade = reg->velocidade * 1024;
+        edge.idPoPsConectado = reg->idPoPsConectado;
+        if (reg->unidadeMedida == 'G') {
+            edge.velocidade = reg->velocidade * 1024;
 
-        graph.insert_edge(vertice, no);
+        } else {
+            edge.velocidade = reg->velocidade;
+        }
+
+        graph.insert_edge(vertice, edge);
         
-    }
-
-    map<int, Vertex>::iterator it;
-    list<no_lista>::iterator jt;
-    
-    for(it=graph.graph.begin(); it!=graph.graph.end(); ++it){
-        for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); ++jt){
-            cout << it->first << " " << it->second.nomePoPs << " "
-            << it->second.nomePais << " "<< it->second.siglaPais << " "
-            <<jt->idPoPsConectado <<" "<< jt->velocidade << "Mbps" << '\n';
-        }        
     }
 
     return graph;
@@ -57,18 +50,23 @@ Graph command11(char* file_name){
 
 void command13(char* file_name) {
     Graph graph = command11(file_name);
-    cout << "sair\n";
     int n;
     cin >> n;
 
     int origin;
     int destination;
+    for (int i = 0; i < n; i++) {
 
-    int speed;
-    for (size_t i = 0; i < n; i++) {
-
+        cin >> origin;
+        cin >> destination;
+        int flux = graph.dijkstra(origin, destination);
+        if (flux == -1) {
+            cout << "O fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << endl;
+        } else {
+            cout << "O fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << "Mbps\n";
+        }
         
-
+        
     }
 
 }

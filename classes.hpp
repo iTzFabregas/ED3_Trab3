@@ -4,46 +4,77 @@
 #include <list>
 #include <iostream>
 #include <map>
+#include <queue>
+
+#define INFINITE INT32_MAX-1
 
 using namespace std;
 
+/**
+ * @brief Stryct da aresta, dada pelo destinatpario da ligação e o seu peso (velociade)
+ * 
+ */
 typedef struct {
     int idPoPsConectado;
     int velocidade;
-} no_lista;
+} Edge;
 
+
+/**
+ * @brief Struct do vertice que tem as informações de cada ponto e a sua lista de adjacencia
+ * 
+ */
 typedef struct {
-    int idConecta; // TIRAR ESSE INT
+    int idConecta;
     string nomePoPs;
     string nomePais;
     string siglaPais;
 
-    list<no_lista> lista_adj;
+    list<Edge> lista_adj;
 } Vertex; 
 
+
+/**
+ * @brief Classe do grafo, com as funções necessárias do grafo e o map dos vértices
+ * 
+ */
 class Graph {
 private:
+    int num_vert;
+    map<int, Vertex> graph_map;
 
 public:
 
-    map<int, Vertex> graph;
-
+    /**
+     * @brief Construtor do grafo que apenas seta o numero de vértices para 0
+     * 
+     */
     Graph() {
-        // O MAP JA ESTA VAZIO
+        this->num_vert = 0;
     }
 
-    void insert_edge(Vertex, no_lista); //paramentro idConecta
+    /**
+     * @brief 
+     * 
+     * @param vertex1 
+     * @param aresta1 
+     */
+    void insert_edge(Vertex, Edge);
 
-    /*bool exist_edge() {
-        return true;
-    }
+    /**
+     * @brief 
+     * 
+     */
+    void print_graph();
 
-    void print_graph() {
-    }
-
-    ~Graph() {
-        
-    }*/
+    /**
+     * @brief 
+     * 
+     * @param orig 
+     * @param dest 
+     * @return int 
+     */
+    int dijkstra(int orig, int dest);
 };
 
 #endif
