@@ -1,25 +1,31 @@
-#include "classes.hpp"
+#include "graph.hpp"
 
 using namespace std;
 
+// FUNÇÃO CRIADA PARA QUE O .sort() FUNCIONE PARA ORDENAR STRUCTS Edge
 bool Edge_compare (const Edge a,const Edge b)
 {
     return a.idPoPsConectado < b.idPoPsConectado;
 }
 
 
-void Graph::insert_edge(Vertex vertex1, Edge aresta1) { //paramentro idConecta
+void Graph::insert_edge(Vertex vertex1, Edge edge1) { //paramentro idConecta
 
     map<int, Vertex>::iterator it;
     it = this->graph_map.find(vertex1.idConecta);
+
+    // SE JA EXISTIR ESSE VERTICE, PUXA DO MAP AS INFORMAÇÕES QUE JA TEM
     if (it != this->graph_map.end()) {
         vertex1.lista_adj = it->second.lista_adj;
     }
-    if (aresta1.velocidade >= 0 ) {
-        vertex1.lista_adj.push_front(aresta1);
+
+    // SE TIVER UMA LIGAÇÃO, FAZ PUSH NA LISTA DE ADJACENCIA
+    if (edge1.velocidade >= 0 ) {
+        vertex1.lista_adj.push_front(edge1);
         vertex1.lista_adj.sort(Edge_compare);
     }
 
+    // SE NAO TIVER O VERTICE NO MAP, INSERE, SE TIVER APENAS MUDA A VARIÁVEL
     if (it == this->graph_map.end()) {
         graph_map.insert(make_pair(vertex1.idConecta, vertex1));
 
@@ -27,18 +33,20 @@ void Graph::insert_edge(Vertex vertex1, Edge aresta1) { //paramentro idConecta
         it->second = vertex1;
     }
 
-    if (aresta1.velocidade >= 0) {
-        it = this->graph_map.find(aresta1.idPoPsConectado);
+    // SE TIVER LIGAÇÃO, VAI TER IDPOPS, ENTAO FAZER A MESMA IDEIA DE VERIFICAR SE
+    // EXISTE E DAR INSERT OU APENAS DAR PUSH NA LISTA DE ADJACENCIA
+    if (edge1.velocidade >= 0) {
+        it = this->graph_map.find(edge1.idPoPsConectado);
         Vertex vertex2;
         if (it != this->graph_map.end()) {
             vertex2 = it->second;
         } else {
-            vertex2.idConecta = aresta1.idPoPsConectado;
+            vertex2.idConecta = edge1.idPoPsConectado;
         }
-        Edge aresta2;
-        aresta2.idPoPsConectado = vertex1.idConecta;
-        aresta2.velocidade = aresta1.velocidade;
-        vertex2.lista_adj.push_front(aresta2);
+        Edge edge2;
+        edge2.idPoPsConectado = vertex1.idConecta;
+        edge2.velocidade = edge1.velocidade;
+        vertex2.lista_adj.push_front(edge2);
         vertex2.lista_adj.sort(Edge_compare);
         
 
@@ -107,11 +115,11 @@ int Graph::dijkstra(int orig, int dest) {
                 int cost = jt->velocidade   ;
 
                 // RELAXAMENTO DA ARESTA
-                if (distance[adj_vertex] > (distance[current_vertex.idConecta] + cost) || distance[adj_vertex] == INFINITE) {///x
+                if (distance[adj_vertex] > (distance[current_vertex.idConecta] + cost)) {///x
                     // ATUALIZA O NOVO VALOR DA DISTANCIA
                     distance[adj_vertex] = distance[current_vertex.idConecta] + cost;
                     queue.push(make_pair(adj_vertex, distance[adj_vertex]));
-                }
+                }   
             }
         }
     }

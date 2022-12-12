@@ -1,4 +1,4 @@
-#include "comando11.hpp"
+#include "commands.hpp"
 
 using namespace std;
 
@@ -6,6 +6,7 @@ Graph command11(char* file_name){
 
     Graph graph; 
 
+    // ABRE E FAZ A LEITURA DO HEADER PARA VER SE O ARQUIVO ESTA ESTÁVEL
     FILE* file = fopen(file_name, "rb");
     if(file == NULL){
         cout << "Falha na execução da funcionalidade." << endl;
@@ -15,24 +16,28 @@ Graph command11(char* file_name){
     Header_reg* header = create_header();
     read_header(header, file);
     if (header->status == '0') {
+        fclose(file);
         cout << "Falha na execução da funcionalidade." << endl;
         return graph;
     }
 
     Data_reg* reg = create_reg();
 
-    Vertex vertice;
+    Vertex vertex;
     Edge edge;
 
-    for(int i = 0; i < header->proxRRN; i++){ //percorrer arquivo de dados
+    // PERCORRE TODOS OS REGISTROS DO ARQUIVO
+    for(int i = 0; i < header->proxRRN; i++){
         fseek(file, (LEN_REG*i) + LEN_DISC_PAG, SEEK_SET);
         read_register(file, reg);
 
-        vertice.idConecta = reg->idConecta;
-        vertice.nomePoPs = reg->nomePoPs;
-        vertice.nomePais = reg->nomePais;
-        vertice.siglaPais = reg->siglaPais;
+        // COLOCA AS INFORMAÇÕES TIRADAS DO ARQUIVO NO VERTICE
+        vertex.idConecta = reg->idConecta;
+        vertex.nomePoPs = reg->nomePoPs;
+        vertex.nomePais = reg->nomePais;
+        vertex.siglaPais = reg->siglaPais;
 
+        // COLOCA AS INFORMAÇÕES TIRADAS DO ARQUIVO NA ARESTA
         edge.idPoPsConectado = reg->idPoPsConectado;
         if (reg->unidadeMedida == 'G') {
             edge.velocidade = reg->velocidade * 1024;
@@ -41,13 +46,18 @@ Graph command11(char* file_name){
             edge.velocidade = reg->velocidade;
         }
 
-        graph.insert_edge(vertice, edge);
+        // INSERE A ARESTA NO GRAFO
+        graph.insert_edge(vertex, edge);
         
     }
 
+    fclose(file);
+    free(header);
+    free(reg);
     return graph;
 }
 
+/*
 void command13(char* file_name) {
     Graph graph = command11(file_name);
     int n;
@@ -59,18 +69,22 @@ void command13(char* file_name) {
 
         cin >> origin;
         cin >> destination;
-        int flux = graph.dijkstra(origin, destination);
-        if (flux == -1) {
-            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << endl;
+        int max_flux;
+        graph.dijkstra(origin, destination, &max_flux);
+        if (max_flux == -1) {
+            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << max_flux << endl;
         } else {
-            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << graph.dijkstra(origin, destination) << "Mbps\n";
+            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << max_flux << "Mbps\n";
         }
         
         
     }
 }
+*/
 
 void command14(char* file_name) {
+
+    // CHAMA O COMANDO 11 PARA CONSTRUIR O GRAFO
     Graph graph = command11(file_name);
     int n;
     cin >> n;
@@ -84,9 +98,11 @@ void command14(char* file_name) {
         cin >> destination;
         cin >> stop;
 
+        // CHAMA O DIJKSTRA PARA ACHAR O MLEHOR CAMINHO ENTRE OS VERTICES
         int flux1 = graph.dijkstra(origin, stop);
         int flux2 = graph.dijkstra(stop, destination);
 
+        // PRINTA O MELHOR CAMINHO ACHADO, SE ACHADO
         if (flux1 == -1 || flux2 == -1) {
             cout << "Comprimento do caminho entre " << origin << " e " 
             << destination << " parando em " << stop << ": -1" << endl;
