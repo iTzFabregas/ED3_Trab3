@@ -1,5 +1,5 @@
-#ifndef __REGISTER_H__
-#define __REGISTER_H__
+#ifndef __REGISTER_HPP__
+#define __REGISTER_HPP__
 
 #include <stdio.h>
 #include <stdlib.h>

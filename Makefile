@@ -1,14 +1,15 @@
 all:
-	gcc -Wall -g -o trab2 *.c
-
-run:
-	./trab2
+	g++ -g -c *.cpp
+	g++ -g -o trab3 *.o 
 
 clean:
-	rm trab2 *.o *.zip *.bin
+	rm *.o *.bin trab3 *.zip
 
 copy:
 	cp ../antes/* ./
 
+run:
+	./trab3
+
 zip:
-	zip trab2.zip Makefile *.c *.o *.h
+	zip trab3.zip Makefile *.cpp *.hpp

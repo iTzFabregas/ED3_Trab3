@@ -1,4 +1,4 @@
-#include "register.h"
+#include "register.hpp"
 
 //aloca memoria e inicializa variaveis para o cabecalho
 Header_reg* create_header(){
