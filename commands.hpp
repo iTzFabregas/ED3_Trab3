@@ -1,9 +1,9 @@
-#ifndef __COMANDO11_HPP__
-#define __COMANDO11_HPP__
+#ifndef __COMMANDS_HPP__
+#define __COMMANDS_HPP__
 
 #include <iostream>
 #include "register.hpp"
-#include "classes.hpp"
+#include "graph.hpp"
 
 using namespace std;
 
