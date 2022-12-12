@@ -1,12 +1,16 @@
 #ifndef __GRAPH_HPP__
 #define __GRAPH_HPP__
 
-#include <list>
 #include <iostream>
 #include <map>
 #include <queue>
+#include <list>
+#include <stack>
 
 #define INFINITE INT32_MAX-1
+#define WHITE 0
+#define GRAY 1
+#define BLACK 2
 
 using namespace std;
 
@@ -59,7 +63,7 @@ public:
     void print_graph();
 
     /**
-     * @brief Métode de percorrer o grafo que encontra o menor caminho que leva de um vertice
+     * @brief Método de percorrer o grafo que encontra o menor caminho que leva de um vertice
      * para outro
      * 
      * @param orig vertice de origem
@@ -67,6 +71,11 @@ public:
      * @return int distancia entre esses vertices
      */
     int dijkstra(int orig, int dest);
+
+    //bool dfs_rec(int v, map<int, int> visited, int *num_cycles, int parent);
+
+    int dfs();
+
 };
 
 #endif
