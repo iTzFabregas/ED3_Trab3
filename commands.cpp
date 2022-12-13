@@ -57,6 +57,14 @@ Graph command11(char* file_name){
     return graph;
 }
 
+void command12(char* file_name){
+
+    Graph graph = command11(file_name);
+
+    cout << "Quantidade de ciclos: " << graph.dfs() << endl;
+
+}
+
 /*
 void command13(char* file_name) {
     Graph graph = command11(file_name);
