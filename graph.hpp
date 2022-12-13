@@ -72,9 +72,10 @@ public:
      */
     int dijkstra(int orig, int dest);
 
-    //bool dfs_rec(int v, map<int, int> visited, int *num_cycles, int parent);
-
+    void dfs_cycle(int vertex, int parent, int cores[], int parents[], int& num_cycles);
+    
     int dfs();
+
 
 };
 
