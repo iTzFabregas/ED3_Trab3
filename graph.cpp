@@ -135,38 +135,6 @@ int Graph::dijkstra(int orig, int dest) {
     }
 }
 
-/*
-int Graph::dfs(){
-    int num_cycles = 0;
-    map<int, int> visited;
-
-    map<int, Vertex>::iterator it;
-    for(it=graph_map.begin(); it!=graph_map.end(); ++it){
-        visited.insert(make_pair(it->first, WHITE));
-    }
-
-    list<Edge>::iterator jt;
-    
-    for(it=graph_map.begin(); it!=graph_map.end(); it++){
-        visited[it->first] = GRAY;
-
-        for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); jt++){
-            if(visited[jt->idPoPsConectado] == WHITE){
-                visited[jt->idPoPsConectado] = GRAY;
-            } else if(visited[jt->idPoPsConectado] == GRAY){
-                visited[jt->idPoPsConectado] = BLACK;
-                num_cycles++;
-                if(jt->idPoPsConectado == it->first){
-                    break;
-                }
-            }
-        }
-    }
-
-    return num_cycles;
-}
-*/
-
 void Graph::dfs_cycle(int vertex, int parent, int colors[], int parents[], int& num_cycles) {
     
     if (colors[vertex] == BLACK) {
@@ -190,7 +158,7 @@ void Graph::dfs_cycle(int vertex, int parent, int colors[], int parents[], int& 
         dfs_cycle(it->idPoPsConectado, vertex, colors, parents, num_cycles);
     }
 
-    colors[vertex] == BLACK;
+    colors[vertex] = BLACK;
 }
 
 int Graph::dfs() {
