@@ -145,7 +145,6 @@ int Graph::dfs(){
     }
 
     list<Edge>::iterator jt;
-    
     for(it=graph_map.begin(); it!=graph_map.end(); it++){
         visited[it->first] = GRAY;
 
@@ -154,11 +153,17 @@ int Graph::dfs(){
                 visited[jt->idPoPsConectado] = GRAY;
             } else if(visited[jt->idPoPsConectado] == GRAY){
                 visited[jt->idPoPsConectado] = BLACK;
-                num_cycles++;
                 if(jt->idPoPsConectado == it->first){
                     break;
                 }
             }
+        }
+    }
+
+    map<int, int>::iterator kt;
+    for(kt = visited.begin(); kt != visited.end(); kt++){
+        if(kt->second == GRAY){
+            num_cycles++;
         }
     }
 
