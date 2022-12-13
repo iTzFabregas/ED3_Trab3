@@ -20,7 +20,8 @@ int main(void) {
             break;
 
         case 12:
-            
+            cin >> file_name;
+            command12(file_name);
             break;
 
         case 13:

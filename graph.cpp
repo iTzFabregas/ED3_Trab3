@@ -9,7 +9,7 @@ bool Edge_compare (const Edge a,const Edge b)
 }
 
 
-void Graph::insert_edge(Vertex vertex1, Edge edge1) { //paramentro idConecta
+void Graph::insert_edge(Vertex vertex1, Edge edge) { //paramentro idConecta
 
     map<int, Vertex>::iterator it;
     it = this->graph_map.find(vertex1.idConecta);
@@ -20,12 +20,12 @@ void Graph::insert_edge(Vertex vertex1, Edge edge1) { //paramentro idConecta
     }
 
     // SE TIVER UMA LIGAÇÃO, FAZ PUSH NA LISTA DE ADJACENCIA
-    if (edge1.velocidade >= 0 ) {
-        vertex1.lista_adj.push_front(edge1);
+    if (edge.velocidade >= 0 ) {
+        vertex1.lista_adj.push_front(edge);
         vertex1.lista_adj.sort(Edge_compare);
     }
 
-    // SE NAO TIVER O VERTICE NO MAP, INSERE, SE TIVER APENAS MUDA A VARIÁVEL
+    // SE NAO TIVER O VERTICE NO MAP, INSERE, SE TIVER APENAS IGUALA AO VERTICE ATUALIZADO
     if (it == this->graph_map.end()) {
         graph_map.insert(make_pair(vertex1.idConecta, vertex1));
 
@@ -35,20 +35,18 @@ void Graph::insert_edge(Vertex vertex1, Edge edge1) { //paramentro idConecta
 
     // SE TIVER LIGAÇÃO, VAI TER IDPOPS, ENTAO FAZER A MESMA IDEIA DE VERIFICAR SE
     // EXISTE E DAR INSERT OU APENAS DAR PUSH NA LISTA DE ADJACENCIA
-    if (edge1.velocidade >= 0) {
-        it = this->graph_map.find(edge1.idPoPsConectado);
+    if (edge.velocidade >= 0) {
+        it = this->graph_map.find(edge.idPoPsConectado);
         Vertex vertex2;
         if (it != this->graph_map.end()) {
             vertex2 = it->second;
         } else {
-            vertex2.idConecta = edge1.idPoPsConectado;
+            vertex2.idConecta = edge.idPoPsConectado;
         }
-        Edge edge2;
-        edge2.idPoPsConectado = vertex1.idConecta;
-        edge2.velocidade = edge1.velocidade;
-        vertex2.lista_adj.push_front(edge2);
+
+        edge.idPoPsConectado = vertex1.idConecta;
+        vertex2.lista_adj.push_front(edge);
         vertex2.lista_adj.sort(Edge_compare);
-        
 
         if (it == this->graph_map.end()) {
             graph_map.insert(make_pair(vertex2.idConecta, vertex2));
@@ -57,6 +55,8 @@ void Graph::insert_edge(Vertex vertex1, Edge edge1) { //paramentro idConecta
             it->second.lista_adj = vertex2.lista_adj;
         }
     }
+
+    // ATUALIZA O NUMERO DE VERTICES
     this->num_vert = this->graph_map.size();
 }
 
@@ -93,36 +93,41 @@ int Graph::dijkstra(int orig, int dest) {
     }
     distance[orig] = 0;
 
-
+    // COLOCA O VERTICE DA ORIGEM NA QUEUE 
     queue.push(make_pair(orig, distance[orig]));
 
     map<int, Vertex>::iterator it;
     while(!queue.empty()) {
 
+        // PEGA O VALOR QUE ESTA NO TOPO DA PILHA
         pair<int, int> current = queue.top();
         it = this->graph_map.find(current.first);
         Vertex current_vertex = it->second;
 
         queue.pop();
-
+        
+        // SE ELE NÃO TIVER SIDO VISITADO AINDA
         if (visited[current_vertex.idConecta] == false) {
             visited[current_vertex.idConecta] == true;
 
             list<Edge>::iterator jt;
 
+            // PERCORRE TODOS OS VERTICES ADJACENTES
             for(jt = current_vertex.lista_adj.begin(); jt != current_vertex.lista_adj.end(); jt++) {
                 int adj_vertex = jt->idPoPsConectado;
-                int cost = jt->velocidade   ;
+                int cost = jt->velocidade;
 
                 // RELAXAMENTO DA ARESTA
-                if (distance[adj_vertex] > (distance[current_vertex.idConecta] + cost)) {///x
-                    // ATUALIZA O NOVO VALOR DA DISTANCIA
+                if (distance[adj_vertex] > (distance[current_vertex.idConecta] + cost)) {
+                    // ATUALIZA O NOVO VALOR DA DISTANCIA ATÉ ESSE VERTICE
                     distance[adj_vertex] = distance[current_vertex.idConecta] + cost;
                     queue.push(make_pair(adj_vertex, distance[adj_vertex]));
                 }   
             }
         }
     }
+
+    // SE A DISTANCIA AINDA FOR "INFINITA" QUER DIZER Q NAO FOI POSSÍVEL CHEGAR NESSE VERTICE
     if (distance[dest] != INFINITE) {
         return distance[dest];
     } else {
@@ -130,3 +135,44 @@ int Graph::dijkstra(int orig, int dest) {
     }
 }
 
+void Graph::dfs_cycle(int vertex, int parent, int colors[], int parents[], int& num_cycles) {
+    
+    if (colors[vertex] == BLACK) {
+        return;
+    }
+    if (colors[vertex] == GRAY) {
+        num_cycles++;
+        return;
+    }
+
+    parents[vertex] = parent;
+    colors[vertex] = GRAY;
+
+    list<Edge>::iterator it;
+    Vertex current = this->graph_map.find(vertex)->second;
+    for(it = current.lista_adj.begin(); it != current.lista_adj.end(); it++) {
+
+        if (it->idPoPsConectado == parents[vertex]) {
+            continue;
+        }
+        dfs_cycle(it->idPoPsConectado, vertex, colors, parents, num_cycles);
+    }
+
+    colors[vertex] = BLACK;
+}
+
+int Graph::dfs() {
+
+    int cores[this->num_vert];
+    int parents[this->num_vert];
+    map<int, Vertex>::iterator it;
+    for(it = graph_map.begin(); it != graph_map.end(); it++) {
+        cores[it->first] = WHITE;
+    }
+
+    int num_cycle = 0;
+    dfs_cycle(1, -1, cores, parents, num_cycle);
+
+    return num_cycle;
+    
+}
