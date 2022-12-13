@@ -135,6 +135,7 @@ int Graph::dijkstra(int orig, int dest) {
     }
 }
 
+/*
 int Graph::dfs(){
     int num_cycles = 0;
     map<int, int> visited;
@@ -149,7 +150,7 @@ int Graph::dfs(){
     for(it=graph_map.begin(); it!=graph_map.end(); it++){
         visited[it->first] = GRAY;
 
-        for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); ++jt){
+        for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); jt++){
             if(visited[jt->idPoPsConectado] == WHITE){
                 visited[jt->idPoPsConectado] = GRAY;
             } else if(visited[jt->idPoPsConectado] == GRAY){
@@ -163,4 +164,47 @@ int Graph::dfs(){
     }
 
     return num_cycles;
+}
+*/
+
+void Graph::dfs_cycle(int vertex, int parent, int colors[], int parents[], int& num_cycles) {
+    
+    if (colors[vertex] == BLACK) {
+        return;
+    }
+    if (colors[vertex] == GRAY) {
+        num_cycles++;
+        return;
+    }
+
+    parents[vertex] = parent;
+    colors[vertex] = GRAY;
+
+    list<Edge>::iterator it;
+    Vertex current = this->graph_map.find(vertex)->second;
+    for(it = current.lista_adj.begin(); it != current.lista_adj.end(); it++) {
+
+        if (it->idPoPsConectado == parents[vertex]) {
+            continue;
+        }
+        dfs_cycle(it->idPoPsConectado, vertex, colors, parents, num_cycles);
+    }
+
+    colors[vertex] == BLACK;
+}
+
+int Graph::dfs() {
+
+    int cores[this->num_vert];
+    int parents[this->num_vert];
+    map<int, Vertex>::iterator it;
+    for(it = graph_map.begin(); it != graph_map.end(); it++) {
+        cores[it->first] = WHITE;
+    }
+
+    int num_cycle = 0;
+    dfs_cycle(1, -1, cores, parents, num_cycle);
+
+    return num_cycle;
+    
 }
