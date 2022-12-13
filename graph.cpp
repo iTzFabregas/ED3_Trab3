@@ -8,6 +8,15 @@ bool Edge_compare (const Edge a,const Edge b)
     return a.idPoPsConectado < b.idPoPsConectado;
 }
 
+bool Graph::is_empty(){
+
+    //SE O MAP DO GRAFO ESTÁ VAZIO, ENTÃO O GRAFO TODO ESTÁ VAZIO
+    if(this->graph_map.empty()){
+        return true;
+    }
+
+    return false;
+}
 
 void Graph::insert_edge(Vertex vertex1, Edge edge) { //paramentro idConecta
 

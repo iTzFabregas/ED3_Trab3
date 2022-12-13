@@ -59,7 +59,14 @@ Graph command11(char* file_name){
 
 void command12(char* file_name){
 
+    // CHAMA O COMANDO 11 PARA CONSTRUIR O GRAFO
     Graph graph = command11(file_name);
+
+    if(graph.is_empty()){
+        return;
+    }
+
+    //CHAMA O MÉTODO DE BFS P/ CALCULAR O NÚMERO DE CICLOS
     cout << "Quantidade de ciclos: " << graph.dfs() << endl;
 
 }
@@ -96,6 +103,10 @@ void command14(char* file_name) {
     int n;
     cin >> n;
 
+    if(graph.is_empty()){
+        return;
+    }
+
     int origin;
     int stop;
     int destination;
@@ -105,7 +116,7 @@ void command14(char* file_name) {
         cin >> destination;
         cin >> stop;
 
-        // CHAMA O DIJKSTRA PARA ACHAR O MLEHOR CAMINHO ENTRE OS VERTICES
+        // CHAMA O DIJKSTRA PARA ACHAR O MELHOR CAMINHO ENTRE OS VÉRTICES
         int flux1 = graph.dijkstra(origin, stop);
         int flux2 = graph.dijkstra(stop, destination);
 

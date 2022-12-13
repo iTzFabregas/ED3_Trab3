@@ -59,6 +59,14 @@ public:
     void insert_edge(Vertex, Edge);
 
     /**
+     * @brief Método que verifica se o grafo está vazio
+     * 
+     * @return true caso esteja vazio
+     * @return false caso contrário
+     */
+    bool is_empty();
+
+    /**
      * @brief Printa todas as arestas do grafo em ordem crescente
      * 
      */
