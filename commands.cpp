@@ -60,6 +60,7 @@ Graph command11(char* file_name){
 void command12(char* file_name){
 
     Graph graph = command11(file_name);
+
     cout << "Quantidade de ciclos: " << graph.dfs() << endl;
 
 }
