@@ -140,32 +140,39 @@ void Graph::dfs_cycle(int vertex, int parent, int colors[], int parents[], int& 
     if (colors[vertex] == BLACK) {
         return;
     }
+
+    //AO VOLTAR EM UM VERTICE JA VISITADO, TEM-SE UM CICLO
     if (colors[vertex] == GRAY) {
         num_cycles++;
         return;
     }
 
+    //AO CHEGAR NUM VERTICE, ELE FICA CINZA
     parents[vertex] = parent;
     colors[vertex] = GRAY;
 
+    //PERCORRER A LISTA ADJACENTE DO VERTICE EM QUESTAO
     list<Edge>::iterator it;
     Vertex current = this->graph_map.find(vertex)->second;
     for(it = current.lista_adj.begin(); it != current.lista_adj.end(); it++) {
 
+        //DECONSIDERA A OCORRENCIA DO VERTICE PAI
         if (it->idPoPsConectado == parents[vertex]) {
             continue;
         }
         dfs_cycle(it->idPoPsConectado, vertex, colors, parents, num_cycles);
     }
 
+    //APOS PERCORRER TODA SUA LIST ADJ, O VERTICE TORNA-SE PRETO 
     colors[vertex] = BLACK;
 }
 
 int Graph::dfs() {
-
     int cores[this->num_vert];
     int parents[this->num_vert];
     map<int, Vertex>::iterator it;
+
+    //TODOS OS VERTICES DO GRAFO COMEÇAM BRANCOS
     for(it = graph_map.begin(); it != graph_map.end(); it++) {
         cores[it->first] = WHITE;
     }

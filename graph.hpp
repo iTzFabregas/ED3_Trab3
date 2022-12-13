@@ -8,6 +8,8 @@
 #include <stack>
 
 #define INFINITE INT32_MAX-1
+
+// MACROS QUE DEFINEM AS CORES USADAS NA BUSCA EM PROFUNDIDADE
 #define WHITE 0
 #define GRAY 1
 #define BLACK 2
@@ -72,8 +74,24 @@ public:
      */
     int dijkstra(int orig, int dest);
 
-    void dfs_cycle(int vertex, int parent, int cores[], int parents[], int& num_cycles);
+    /**
+     * @brief Chama recursiva do método de busca em profundidade, percorre a lista adjacente 
+     * de um vértice passado
+     * 
+     * @param vertex idConecta do vértice que se queira fazer a busca
+     * @param parent valor do vértice pai do vertex
+     * @param colors array que guarda a cor de determinado vértice
+     * @param parents array que guarda os valores dos vértices pais
+     * @param num_cycles número de ciclos do grafo
+     */
+    void dfs_cycle(int vertex, int parent, int colors[], int parents[], int& num_cycles);
     
+    /**
+     * @brief Método que, a partir de uma busca em profundidade, calcula o
+     * numero de ciclos do grafo
+     * 
+     * @return int numero de ciclos do grafo. Caso o grafo seja acíclico, retorna 0
+     */
     int dfs();
 
 
