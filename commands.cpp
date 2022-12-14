@@ -71,30 +71,33 @@ void command12(char* file_name){
 
 }
 
-/*
 void command13(char* file_name) {
+    // CHAMA O COMANDO 11 PARA CONSTRUIR O GRAFO
     Graph graph = command11(file_name);
     int n;
     cin >> n;
 
+    if(graph.is_empty()){
+        return;
+    }
+
     int origin;
     int destination;
+
     for (int i = 0; i < n; i++) {
 
         cin >> origin;
         cin >> destination;
         int max_flux;
-        graph.dijkstra(origin, destination, &max_flux);
+        max_flux = graph.total_flow(origin, destination);
         if (max_flux == -1) {
             cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << max_flux << endl;
         } else {
             cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << max_flux << "Mbps\n";
         }
         
-        
     }
 }
-*/
 
 void command14(char* file_name) {
 

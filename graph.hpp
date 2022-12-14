@@ -102,6 +102,9 @@ public:
      */
     int dfs();
 
+    bool bfs_flow(int v, int** mat_graph, int orig, int dest, int parent[]);
+
+    int total_flow(int orig, int dest);
 
 };
 

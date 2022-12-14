@@ -25,8 +25,8 @@ int main(void) {
             break;
 
         case 13:
-            //cin >> file_name;
-            //command13(file_name);
+            cin >> file_name;
+            command13(file_name);
             break;
             
         case 14:

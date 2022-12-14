@@ -192,3 +192,76 @@ int Graph::dfs() {
     return num_cycle;
     
 }
+
+bool Graph::bfs_flow(int v, int** mat_graph, int orig, int dest, int parent[]){
+    bool visited[v];
+    for(int i = 0; i < v; i++){
+        visited[i] = WHITE;
+    }
+
+    queue<int> q;
+    q.push(orig);
+    visited[orig] = true;
+    parent[orig] = -1;
+
+    while(!q.empty()){
+        int u = q.front();
+        q.pop();
+
+        for(int i = 0; i < v; i++){
+            if(visited[i] == false && mat_graph[u][i] > 0){
+                if(i == dest){
+                    parent[i] = u;
+                    return true;
+                }
+                q.push(i);
+                parent[i] = u;
+                visited[i] = true;
+            }
+        }
+    }
+
+    return false;
+}
+
+int Graph::total_flow(int orig, int dest){
+    int v = this->num_vert;
+
+    int** mat_graph = new int*[v];
+    for(int i = 0; i < v; i++){
+        mat_graph[i] = new int[v];
+    }
+
+    map<int, Vertex>::iterator it;
+    list<Edge>::iterator jt;
+
+    for(it=graph_map.begin(); it!=graph_map.end(); ++it){
+        for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); ++jt){
+            mat_graph[it->first][jt->idPoPsConectado] = jt->velocidade;
+        }
+    }
+
+    int parent[this->num_vert];
+    int max_flow = 0;
+
+    while(bfs_flow(v, mat_graph, orig, dest, parent)){
+        int path_flow = INFINITE;
+        for(int i = dest; i != orig; i = parent[i]){
+            path_flow = min(path_flow, mat_graph[parent[i]][i]);
+        }
+
+        for(int i = dest; i != orig; i = parent[i]){
+            mat_graph[parent[i]][i] -= path_flow;
+            mat_graph[i][parent[i]] += path_flow;
+        }
+
+        max_flow += path_flow;
+    }
+
+    for(int i = 0; i < v; i++){
+        delete[] mat_graph[i];
+    }
+    delete[] mat_graph;
+
+    return max_flow;
+}
