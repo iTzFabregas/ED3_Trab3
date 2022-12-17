@@ -72,6 +72,7 @@ void command12(char* file_name){
 }
 
 void command13(char* file_name) {
+    
     // CHAMA O COMANDO 11 PARA CONSTRUIR O GRAFO
     Graph graph = command11(file_name);
     int n;
@@ -88,12 +89,12 @@ void command13(char* file_name) {
 
         cin >> origin;
         cin >> destination;
-        int max_flux;
-        max_flux = graph.total_flow(origin, destination);
+
+        int max_flux = graph.total_flow(origin, destination);
         if (max_flux == -1) {
             cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << max_flux << endl;
         } else {
-            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << max_flux << "Mbps\n";
+            cout << "Fluxo máximo entre " << origin << " e " << destination << ": " << max_flux << " Mbps\n";
         }
         
     }

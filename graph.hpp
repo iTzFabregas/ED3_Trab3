@@ -83,13 +83,13 @@ public:
     int dijkstra(int orig, int dest);
 
     /**
-     * @brief Chama recursiva do método de busca em profundidade, percorre a lista adjacente 
+     * @brief Chamada recursiva do método de busca em profundidade, percorre a lista adjacente 
      * de um vértice passado
      * 
-     * @param vertex idConecta do vértice que se queira fazer a busca
-     * @param parent valor do vértice pai do vertex
-     * @param colors array que guarda a cor de determinado vértice
-     * @param parents array que guarda os valores dos vértices pais
+     * @param vertex     idConecta do vértice que se queira fazer a busca
+     * @param parent     valor do vértice pai do vertex
+     * @param colors     array que guarda a cor de determinado vértice
+     * @param parents    array que guarda os valores dos vértices pais
      * @param num_cycles número de ciclos do grafo
      */
     void dfs_cycle(int vertex, int parent, int colors[], int parents[], int& num_cycles);
@@ -102,8 +102,30 @@ public:
      */
     int dfs();
 
-    bool bfs_flow(int v, int** mat_graph, int orig, int dest, int parent[]);
+    /**
+     * @brief Método recursivo de DFS adaptado para calcular o fluxo máximo
+     * entre dois vértices
+     * 
+     * @param orig      vertice de inicio do fluxo
+     * @param parent    pai do vertice de origem
+     * @param dest      vertice do final do fluxo
+     * @param colors    array que guarda a cor de determinado vertice
+     * @param parents   array que guarda os valores dos vertices pais
+     * @param found     indicar se encontrou o destino ou nao
+     * @param max_flow  valor do fluxo maximo
+     * @return true     valor de retorno p/ processo recursivo
+     */
+    int dfs_flow(int orig, int parent, int dest, int colors[], int parents[], int& found, int& max_flow);
 
+    /**
+     * @brief Método que calcula o fluxo máximo entre dois vértices
+     * considerando todos os caminhos possíveis
+     * 
+     * @param orig vertice de origem do fluxo
+     * @param dest vertice do fim do fluxo
+     * @return int retorna o valor do fluxo maximo 
+     * considerando todos os caminhos possiveis 
+     */
     int total_flow(int orig, int dest);
 
 };

@@ -165,7 +165,7 @@ void Graph::dfs_cycle(int vertex, int parent, int colors[], int parents[], int& 
     Vertex current = this->graph_map.find(vertex)->second;
     for(it = current.lista_adj.begin(); it != current.lista_adj.end(); it++) {
 
-        //DECONSIDERA A OCORRENCIA DO VERTICE PAI
+        //DESCONSIDERA A OCORRENCIA DO VERTICE PAI
         if (it->idPoPsConectado == parents[vertex]) {
             continue;
         }
@@ -193,75 +193,74 @@ int Graph::dfs() {
     
 }
 
-bool Graph::bfs_flow(int v, int** mat_graph, int orig, int dest, int parent[]){
-    bool visited[v];
-    for(int i = 0; i < v; i++){
-        visited[i] = WHITE;
-    }
-
-    queue<int> q;
-    q.push(orig);
-    visited[orig] = true;
-    parent[orig] = -1;
-
-    while(!q.empty()){
-        int u = q.front();
-        q.pop();
-
-        for(int i = 0; i < v; i++){
-            if(visited[i] == false && mat_graph[u][i] > 0){
-                if(i == dest){
-                    parent[i] = u;
-                    return true;
-                }
-                q.push(i);
-                parent[i] = u;
-                visited[i] = true;
-            }
+int Graph::dfs_flow(int orig, int parent, int dest, int colors[], int parents[], int& found, int& flow) {
+    if (colors[orig] == BLACK) {
+        if(found == 0){
+            return flow;
+        } else { 
+            return -1;
         }
     }
 
-    return false;
+    //AO VOLTAR EM UM VERTICE JA VISITADO, TEM-SE UM CICLO
+    if (colors[orig] == GRAY) {
+        if(found == 0){
+            return flow;
+        } else { 
+            return -1;
+        }
+    }
+
+    //NAO SALVA VALOR DE PAI P/ A ORIGEM
+    if(parent != -1)
+        parents[orig] = parent;
+
+    //AO CHEGAR NUM VERTICE, ELE FICA CINZA
+    colors[orig] = GRAY;
+
+    //PERCORRER A LISTA ADJACENTE DO VERTICE EM QUESTAO
+    list<Edge>::iterator it;
+    Vertex current = this->graph_map.find(orig)->second;
+    for(it = current.lista_adj.begin(); it != current.lista_adj.end(); it++) {
+        //INTERROMPE CASO ACHE O DESTINO
+        if (it->idPoPsConectado == dest) {
+            found = 0;
+            return flow;
+        }
+
+        //SOMA O FLUXO P/ O COMEÇO DO CAMINHO
+        if (colors[it->idPoPsConectado] != GRAY and parent == -1){
+            flow += it->velocidade;
+        }
+
+        dfs_flow(it->idPoPsConectado, orig, dest, colors, parents, found, flow);
+    }
+
+    //APOS PERCORRER TODA SUA LIST ADJ, O VERTICE TORNA-SE PRETO 
+    colors[orig] = BLACK;
+
+    if(found == 0){
+        return flow;
+    } else { 
+        return -1;
+    }
 }
 
 int Graph::total_flow(int orig, int dest){
-    int v = this->num_vert;
+    int origin = orig;
+    int destination = dest;
+    int cores[num_vert];
+    int parents[num_vert];
+    int found = 1;
+    int flow = 0;
 
-    int** mat_graph = new int*[v];
-    for(int i = 0; i < v; i++){
-        mat_graph[i] = new int[v];
-    }
-
+    //TODOS OS VERTICES DO GRAFO COMEÇAM BRANCOS
     map<int, Vertex>::iterator it;
-    list<Edge>::iterator jt;
-
     for(it=graph_map.begin(); it!=graph_map.end(); ++it){
-        for(jt = it->second.lista_adj.begin(); jt != it->second.lista_adj.end(); ++jt){
-            mat_graph[it->first][jt->idPoPsConectado] = jt->velocidade;
-        }
+        cores[it->first] = WHITE;
     }
 
-    int parent[this->num_vert];
-    int max_flow = 0;
+    //CHAMA FUNCAO RECURSIVA P/ VER POSSIVEIS CAMINHOS
+    return dfs_flow(origin, -1, destination, cores, parents, found, flow); 
 
-    while(bfs_flow(v, mat_graph, orig, dest, parent)){
-        int path_flow = INFINITE;
-        for(int i = dest; i != orig; i = parent[i]){
-            path_flow = min(path_flow, mat_graph[parent[i]][i]);
-        }
-
-        for(int i = dest; i != orig; i = parent[i]){
-            mat_graph[parent[i]][i] -= path_flow;
-            mat_graph[i][parent[i]] += path_flow;
-        }
-
-        max_flow += path_flow;
-    }
-
-    for(int i = 0; i < v; i++){
-        delete[] mat_graph[i];
-    }
-    delete[] mat_graph;
-
-    return max_flow;
 }
