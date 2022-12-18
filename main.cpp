@@ -1,3 +1,8 @@
+/*
+Fabricio Sampaio [runcodes] - 12547423 - participacao: 100%
+Pedro Lucas Castro de Andrade - 11212289 - participacao: 100%
+*/
+
 #include <iostream>
 #include "commands.hpp"
 
