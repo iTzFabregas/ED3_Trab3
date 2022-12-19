@@ -177,17 +177,17 @@ void Graph::dfs_cycle(int vertex, int parent, int colors[], int parents[], int& 
 }
 
 int Graph::dfs() {
-    int cores[this->num_vert];
+    int colors[this->num_vert];
     int parents[this->num_vert];
     map<int, Vertex>::iterator it;
 
     //TODOS OS VERTICES DO GRAFO COMEÇAM BRANCOS
     for(it = graph_map.begin(); it != graph_map.end(); it++) {
-        cores[it->first] = WHITE;
+        colors[it->first] = WHITE;
     }
 
     int num_cycle = 0;
-    dfs_cycle(1, -1, cores, parents, num_cycle);
+    dfs_cycle(1, -1, colors, parents, num_cycle);
 
     return num_cycle;
     

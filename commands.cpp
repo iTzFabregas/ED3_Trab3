@@ -121,16 +121,16 @@ void command14(char* file_name) {
         cin >> stop;
 
         // CHAMA O DIJKSTRA PARA ACHAR O MELHOR CAMINHO ENTRE OS VÉRTICES
-        int flux1 = graph.dijkstra(origin, stop);
-        int flux2 = graph.dijkstra(stop, destination);
+        int dist1 = graph.dijkstra(origin, stop);
+        int dist2 = graph.dijkstra(stop, destination);
 
         // PRINTA O MELHOR CAMINHO ACHADO, SE ACHADO
-        if (flux1 == -1 || flux2 == -1) {
+        if (dist1 == -1 || dist2 == -1) {
             cout << "Comprimento do caminho entre " << origin << " e " 
             << destination << " parando em " << stop << ": -1" << endl;
         } else {
             cout << "Comprimento do caminho entre " << origin << " e " 
-            << destination << " parando em " << stop << ": " << flux1+flux2
+            << destination << " parando em " << stop << ": " << dist1+dist2
             << "Mbps" << endl;
         }
     }
