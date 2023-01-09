@@ -34,3 +34,7 @@ ser executada n vezes seguidas.
 <li>14) Essa funcionalidade determina o comprimento do caminho mínimo
 entre dois PoPs, sendo que existe a necessidade de se passar por um terceiro PoPs. Essa funcionalidade pode 
 ser executada n vezes seguidas. Nesta funcionalidade, entenda que caminho mínimo se refere à menor soma de velocidades disponíveis. 
+</br></br>
+<p>Para compilar os códigos, use o comando <code>make all</code>.</p>
+<p>Para executar o programa, use o comando <code>make run</code>.</p>
+<p>Para testar o programa, pode-se usar o arquivo <strong>topologiaRedeT3.csv</strong>.</p>
