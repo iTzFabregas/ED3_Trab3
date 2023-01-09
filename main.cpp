@@ -1,6 +1,6 @@
 /*
-Fabricio Sampaio [runcodes] - 12547423 - participacao: 100%
-Pedro Lucas Castro de Andrade - 11212289 - participacao: 100%
+Fabricio Sampaio
+Pedro Lucas Castro de Andrade
 */
 
 #include <iostream>
