@@ -21,20 +21,46 @@ cada elemento da lista linear representa uma aresta entre idConecta e
 idPoPsConectado. A aresta armazena a velocidade em Gbps. Velocidades
 indicadas em Mbps são transformadas em Gbps. Considere que 1 Mbps =
 0.0009765625 Gbps e que 1 Gbps = 1024 Mbps. Os elementos de cada lista linear
-são ordenados de forma crescente de acordo com idPoPsConectado.
-</br></br>
+são ordenados de forma crescente de acordo com idPoPsConectado.</br></br>
+<strong>Entrada do programa para essa funcionalidade:</br>
+11 topologiaRede.bin</strong>
+</br>
+
+<hr>
+
 <li>12) Essa funcionalidade determina quantos ciclos simples existem no grafo. Um ciclo simples é um ciclo em que nenhum
 vértice se repete, com exceção do primeiro e do último (ou seja, o primeiro vértice,
 chamado de vértice de origem, é o mesmo que o último vértice, chamado de vértice de
-destino).
-</br></br>
+destino).</br></br>
+<strong>Entrada do programa para essa funcionalidade:</br>
+12 topologiaRede.bin</strong>
+</br>
+
+<hr>
+
 <li>13) Essa funcionalidade determina qual o fluxo máximo entre dois PoPs. Essa funcionalidade pode
-ser executada n vezes seguidas. 
-</br></br>
+ser executada N vezes seguidas.</br></br>
+  <strong>Entrada do programa para essa funcionalidade:</br>
+13 topologiaRede.bin N </br>
+PoPsOrigem1 PoPsDestino1</br>
+...</br>
+PoPsOrigemN PoPs2DestinoN</strong>
+</br>
+
+<hr>
+
 <li>14) Essa funcionalidade determina o comprimento do caminho mínimo
 entre dois PoPs, sendo que existe a necessidade de se passar por um terceiro PoPs. Essa funcionalidade pode 
-ser executada n vezes seguidas. Nesta funcionalidade, entenda que caminho mínimo se refere à menor soma de velocidades disponíveis. 
-</br></br>
-<p>Para compilar os códigos, use o comando <code>make all</code>.</p>
-<p>Para executar o programa, use o comando <code>make run</code>.</p>
-<p>Para testar o programa, pode-se usar o arquivo <strong>topologiaRedeT3.csv</strong>.</p>
+ser executada N vezes seguidas. Nesta funcionalidade, entenda que caminho mínimo se refere à menor soma de velocidades disponíveis.</br></br>
+<strong>Entrada do programa para essa funcionalidade:</br>
+14 topologiaRede.bin N </br>
+PoPsOrigem1 PoPsDestino1 PoPsParada1</br>
+...</br>
+PoPsOrigemN PoPsDestinoN PoPsParadaN</strong>
+</br>
+
+<hr>
+
+<p>Para compilar os códigos, use o comando <code>make all</code></p>
+<p>Para executar o programa, use o comando <code>make run</code></p>
+<p>Para testar o programa, pode-se usar o arquivo <strong>binario1.bin</strong></p>
